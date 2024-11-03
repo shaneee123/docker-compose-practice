@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  db:
+    image: mongo:5.0
+    container_name: mongo_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  back:
+    build:
+      context: ./back
+    container_name: fastapi_back
+    environment:
+      MONGO_URI: mongodb://db:27017
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  front:
+    build:
+      context: ./front
+    container_name: frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - back
+
+volumes:
+  mongo_data:
