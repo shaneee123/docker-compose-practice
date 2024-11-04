@@ -30,7 +30,6 @@ def decrement_count():
     count = counter_collection.find_one({"_id": 1})["count"]
     return {"count": count}
 
-
 @app.get("/count")
 def get_count():
     count = counter_collection.find_one({"_id": 1})["count"]
